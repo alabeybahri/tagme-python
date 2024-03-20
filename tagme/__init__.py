@@ -9,8 +9,7 @@ import json
 import logging
 import requests
 import six
-
-from html.parser import HTMLParser
+import html
 
 __all__ = [
     'annotate', 'mentions', 'relatedness_wid', 'relatedness_title', 'Annotation',
@@ -28,7 +27,6 @@ DEFAULT_LONG_TEXT = 3
 WIKIPEDIA_URI_BASE = u"https://{}.wikipedia.org/wiki/{}"
 MAX_RELATEDNESS_PAIRS_PER_REQUEST = 100
 GCUBE_TOKEN = None
-HTML_PARSER = HTMLParser()
 
 class Annotation(object):
     '''
@@ -174,7 +172,7 @@ def wiki_title(title):
     Given a normalized title, get the page title. E.g. "Barack_Obama" becomes "Barack Obama"
     :param title: a wikipedia title.
     '''
-    return HTML_PARSER.unescape(title.strip(" _").replace("_", " "))
+    return html.unescape(title.strip(" _").replace("_", " "))
 
 
 def title_to_uri(entity_title, lang=DEFAULT_LANG):
